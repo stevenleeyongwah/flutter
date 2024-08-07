@@ -24,8 +24,8 @@ class _LoginPageState extends State<LoginPage> {
         _emailController.text,
         _passwordController.text,
       );
-      print(response);
-      if (response['id']) {
+
+      if (response['id'].toString().isNotEmpty) {
         // Handle successful login
         Navigator.pushReplacementNamed(context, '/home'); // Example route
       } else {
