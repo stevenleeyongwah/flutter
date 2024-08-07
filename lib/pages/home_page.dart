@@ -1,3 +1,4 @@
+import 'package:coffee_card/pages/view_transaction_page.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
@@ -39,7 +40,7 @@ class _HomePageState extends State<HomePage> {
       ),
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.all(16.0),
+          padding: const EdgeInsets.all(16),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -47,9 +48,9 @@ class _HomePageState extends State<HomePage> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  _buildActionButton(Icons.add, 'Add Money'),
-                  _buildActionButton(Icons.qr_code_scanner, 'Scan QR'),
-                  _buildActionButton(Icons.send, 'Send Money'),
+                  _buildActionButton(Icons.add, 'Add Money', context),
+                  _buildActionButton(Icons.qr_code_scanner, 'Scan QR', context),
+                  _buildActionButton(Icons.send, 'Send Money', context),
                 ],
               ),
               SizedBox(height: 20),
@@ -58,9 +59,9 @@ class _HomePageState extends State<HomePage> {
               SizedBox(height: 10),
               Row(
                 children: [
-                  Expanded(child: _buildAccountCard('Main account', 'RM36.62', 'View transactions')),
+                  Expanded(child: _buildAccountCard('Main account', 'RM36.62', 'View transactions', context)),
                   SizedBox(width: 10),
-                  Expanded(child: _buildAccountCard('Savings Pockets', 'RM0.00', '')),
+                  Expanded(child: _buildAccountCard('Savings Pockets', 'RM0.00', '', context)),
                 ],
               ),
               SizedBox(height: 20),
@@ -82,13 +83,18 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Widget _buildActionButton(IconData icon, String label) {
+  Widget _buildActionButton(IconData icon, String label, BuildContext context) {
     return Column(
       children: [
-        CircleAvatar(
-          radius: 30,
-          backgroundColor: Colors.purpleAccent,
-          child: Icon(icon, color: Colors.white, size: 30),
+        GestureDetector(
+          onTap: () {
+            // Add navigation logic here if needed
+          },
+          child: CircleAvatar(
+            radius: 30,
+            backgroundColor: Colors.purpleAccent,
+            child: Icon(icon, color: Colors.white, size: 30),
+          ),
         ),
         SizedBox(height: 8),
         Text(label, style: TextStyle(color: Colors.white, fontSize: 12)),
@@ -96,25 +102,39 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Widget _buildAccountCard(String title, String balance, String actionText) {
-    return Container(
-      padding: EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: Colors.grey[900],
-        borderRadius: BorderRadius.circular(10),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(title, style: TextStyle(color: Colors.grey, fontSize: 14)),
-          SizedBox(height: 8),
-          Text(balance, style: TextStyle(color: Colors.white, fontSize: 22, fontWeight: FontWeight.bold)),
-          if (actionText.isNotEmpty)
-            Padding(
-              padding: const EdgeInsets.only(top: 8.0),
-              child: Text(actionText, style: TextStyle(color: Colors.purpleAccent, fontSize: 12)),
-            ),
-        ],
+  Widget _buildAccountCard(String title, String balance, String actionText, BuildContext context) {
+    return AspectRatio(
+      aspectRatio: 1, // 1:1 aspect ratio for equal width and height
+      child: GestureDetector(
+        onTap: () {
+          if (actionText.isNotEmpty) {
+            // Navigate to the View Transactions page
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => ViewTransactionPage()),
+            );
+          }
+        },
+        child: Container(
+          padding: EdgeInsets.all(16),
+          decoration: BoxDecoration(
+            color: Colors.grey[900],
+            borderRadius: BorderRadius.circular(10),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(title, style: TextStyle(color: Colors.grey, fontSize: 14)),
+              SizedBox(height: 8),
+              Text(balance, style: TextStyle(color: Colors.white, fontSize: 22, fontWeight: FontWeight.bold)),
+              if (actionText.isNotEmpty)
+                Padding(
+                  padding: const EdgeInsets.only(top: 8.0),
+                  child: Text(actionText, style: TextStyle(color: Colors.purpleAccent, fontSize: 12)),
+                ),
+            ],
+          ),
+        ),
       ),
     );
   }

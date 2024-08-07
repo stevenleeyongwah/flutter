@@ -8,12 +8,12 @@ class AddMoneyPage extends StatefulWidget {
 }
 
 class _AddMoneyPageState extends State<AddMoneyPage> {
-  double _amount = 0.00;
+  TextEditingController _amountController = TextEditingController();
   List<double> _topUpOptions = [];
 
   void _updateAmount(double value) {
     setState(() {
-      _amount += value;
+      _amountController.text = value.toStringAsFixed(2);
     });
   }
 
@@ -76,20 +76,43 @@ class _AddMoneyPageState extends State<AddMoneyPage> {
               'Please enter amount',
               style: TextStyle(color: Colors.white, fontSize: 20),
             ),
+            
             SizedBox(height: 20),
-            Text(
-              'RM ${_amount.toStringAsFixed(2)}',
+
+            TextField(
+              controller: _amountController,
+              keyboardType: TextInputType.number,
               style: TextStyle(
                 color: Colors.white,
                 fontSize: 40,
                 fontWeight: FontWeight.bold,
               ),
+              decoration: InputDecoration(
+                prefixText: 'RM ',
+                prefixStyle: TextStyle(
+                  color: Colors.white,
+                  fontSize: 40,
+                  fontWeight: FontWeight.bold,
+                ),
+                border: InputBorder.none,
+              ),
             ),
+            // Text(
+            //   'RM ${_amount.toStringAsFixed(2)}',
+            //   style: TextStyle(
+            //     color: Colors.white,
+            //     fontSize: 40,
+            //     fontWeight: FontWeight.bold,
+            //   ),
+            // ),
+
             SizedBox(height: 10),
+
             Text(
               'Minimum transfer amount is RM10.00',
               style: TextStyle(color: Colors.grey, fontSize: 14),
             ),
+
             SizedBox(height: 30),
             
             Wrap(

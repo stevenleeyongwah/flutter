@@ -10,7 +10,20 @@ class PaymentService {
       Uri.parse('$apiUrl/api/payments/top-up-options'),
       headers: {'Content-Type': 'application/json'}
     );
-    print("response: ${response.body}");
+
+    if (response.statusCode == 200) {
+      return jsonDecode(response.body);
+    } else {
+      throw Exception('Failed to login');
+    }
+  }
+
+  Future<Map<String, dynamic>> getTransactions() async {
+    final response = await http.get(
+      Uri.parse('$apiUrl/api/payments/transactions'),
+      headers: {'Content-Type': 'application/json'}
+    );
+
     if (response.statusCode == 200) {
       return jsonDecode(response.body);
     } else {
