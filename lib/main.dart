@@ -1,28 +1,24 @@
-import 'package:coffee_card/database/expense_database.dart';
-import 'package:coffee_card/pages/home_page.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'pages/login_page.dart'; // Import your login page
+import 'pages/home_page.dart'; // Import other pages
 
-void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-
-  await ExpenseDatabase.initialize();
-  runApp(
-    ChangeNotifierProvider(
-      create: (context) => ExpenseDatabase(),
-      child: const MyApp()
-    ),
-  );
+Future<void> main() async {
+  await dotenv.load(); // Load environment variables
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: HomePage()
+      initialRoute: '/login', // Set the default route
+      routes: {
+        '/login': (context) => LoginPage(), // Define the login route
+        '/home': (context) => HomePage(), // Define another route
+        // Add more routes as needed
+      },
     );
   }
 }
