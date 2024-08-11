@@ -89,7 +89,7 @@ class _ViewTransactionPageState extends State<ViewTransactionPage> {
       children: [
         CircleAvatar(
           radius: 30,
-          backgroundColor: Colors.purpleAccent,
+          backgroundColor: Color.fromARGB(255, 101, 3, 118),
           child: Icon(icon, color: Colors.white, size: 30),
         ),
         SizedBox(height: 8),
@@ -122,7 +122,7 @@ class _ViewTransactionPageState extends State<ViewTransactionPage> {
   Widget _buildTransactionList() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
-      children: _transactions.entries.map((entry) {
+      children: _transactions.entries.map<Widget>((entry) {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -133,7 +133,7 @@ class _ViewTransactionPageState extends State<ViewTransactionPage> {
             ),
             SizedBox(height: 10),
             Column(
-              children: entry.value.map((transaction) {
+              children: entry.value.map<Widget>((transaction) {
                 return _buildTransactionCard(
                   transaction['description']!,
                   transaction['amount']!,

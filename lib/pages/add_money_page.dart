@@ -1,3 +1,4 @@
+import 'package:coffee_card/components/add_money_continue_btn.dart';
 import 'package:flutter/material.dart';
 import '../services/payment_service.dart'; // Import the user service
 import 'dart:convert'; // Import this if not already
@@ -51,7 +52,7 @@ class _AddMoneyPageState extends State<AddMoneyPage> {
         backgroundColor: Colors.black,
         elevation: 0,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back),
+          icon: const Icon(Icons.arrow_back),
           onPressed: () {
             Navigator.pop(context); // Go back to the previous page
           },
@@ -67,27 +68,52 @@ class _AddMoneyPageState extends State<AddMoneyPage> {
           // ),
         ],
       ),
+      drawer: Drawer(
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: <Widget>[
+            const DrawerHeader(
+              child: Text('Drawer Header'),
+              decoration: BoxDecoration(
+                color: Colors.blue,
+              ),
+            ),
+            ListTile(
+              title: const Text('Item 1'),
+              onTap: () {
+                Navigator.pop(context); // Close the drawer
+              },
+            ),
+            ListTile(
+              title: const Text('Item 2'),
+              onTap: () {
+                Navigator.pop(context); // Close the drawer
+              },
+            ),
+          ],
+        ),
+      ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
+            const Text(
               'Please enter amount',
               style: TextStyle(color: Colors.white, fontSize: 20),
             ),
             
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
 
             TextField(
               controller: _amountController,
               keyboardType: TextInputType.number,
-              style: TextStyle(
+              style: const TextStyle(
                 color: Colors.white,
                 fontSize: 40,
                 fontWeight: FontWeight.bold,
               ),
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 prefixText: 'RM ',
                 prefixStyle: TextStyle(
                   color: Colors.white,
@@ -106,14 +132,14 @@ class _AddMoneyPageState extends State<AddMoneyPage> {
             //   ),
             // ),
 
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
 
-            Text(
+            const Text(
               'Minimum transfer amount is RM10.00',
               style: TextStyle(color: Colors.grey, fontSize: 14),
             ),
 
-            SizedBox(height: 30),
+            const SizedBox(height: 30),
             
             Wrap(
             alignment: WrapAlignment.center,
@@ -127,29 +153,21 @@ class _AddMoneyPageState extends State<AddMoneyPage> {
                     for (int j = i; j < i + 3 && j < _topUpOptions.length; j++)
                       Expanded(
                         child: Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 4.0),
+                          padding: const EdgeInsets.symmetric(horizontal: 4.0),
                           child: _buildAmountButton(_topUpOptions[j]),
                         ),
                       ),
                     if (i + 3 > _topUpOptions.length)
                       for (int k = 0; k < 3 - (_topUpOptions.length - i); k++)
-                        Expanded(child: SizedBox()),
+                        const Expanded(child: SizedBox()),
                   ],
                 ),
             ],
           ),
 
-            Spacer(), // Pushes the button to the bottom
-            Align(
-              alignment: Alignment.bottomRight,
-              child: FloatingActionButton(
-                backgroundColor: Colors.purpleAccent,
-                child: Icon(Icons.arrow_forward),
-                onPressed: () {
-                  // Handle forward action here
-                },
-              ),
-            ),
+            const Spacer(), // Pushes the button to the bottom
+          
+            AddMoneyContinueBtn()
           ],
         ),
       ),
@@ -163,11 +181,11 @@ class _AddMoneyPageState extends State<AddMoneyPage> {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(20),
         ),
-        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
       ),
       child: Text(
         'RM${amount.toStringAsFixed(0)}',
-        style: TextStyle(color: Colors.white, fontSize: 16),
+        style: const TextStyle(color: Colors.white, fontSize: 16),
       ),
       onPressed: () {
         _updateAmount(amount); // Update the amount when the button is pressed
